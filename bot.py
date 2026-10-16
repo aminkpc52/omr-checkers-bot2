@@ -21,7 +21,19 @@ Cara jalankan (dalam Visual Studio / VS Code):
 
 Rujuk README.md untuk arahan penuh & cara dapatkan token daripada BotFather.
 """
+import http.server
+import socketserver
+import threading
+import os
 
+def run_dummy_server():
+    port = int(os.environ.get("PORT", 8080))
+    handler = http.server.SimpleHTTPRequestHandler
+    with socketserver.TCPServer(("", port), handler) as httpd:
+        httpd.serve_forever()
+
+# Jalankan web server ringkas di latar belakang
+threading.Thread(target=run_dummy_server, daemon=True).start()
 import asyncio
 import logging
 import os
